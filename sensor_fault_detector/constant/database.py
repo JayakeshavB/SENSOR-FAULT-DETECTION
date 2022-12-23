@@ -1,2 +1,2 @@
-DATABASE_NAME = 'sensor_databases'
-
+DATABASE_NAME = "sensor_fault_db"
+COLLECTION_NAME = "car"
