@@ -2,18 +2,22 @@ from sensor_fault_detector.entity.config_entity import TrainingPipelineConfig, D
 from sensor_fault_detector.entity.artifact_entity import DataIngestionArtifact
 from sensor_fault_detector.exception import SensorException
 from sensor_fault_detector.logger import logging
-import sys
+from sensor_fault_detector.components.data_ingestion import DataIngestion
+import os, sys
 
 class TrainingPipeline:
     def __init__(self):
         training_pipeline_config = TrainingPipelineConfig()
-        self.data_ingest_config = DataIngestPipelineConfig(training_pipeline_config)
         self.training_pipeline_config = training_pipeline_config
     
     def start_data_ingestion(self)->DataIngestionArtifact:
         try:
             logging.info("Starting data ingestion")
-            logging.info("data ingestion complete")
+            self.data_ingest_config = DataIngestPipelineConfig(training_pipeline_config=self.training_pipeline_config)
+            data_ingestion = DataIngestion(data_ingestion_pipeline_config=self.data_ingest_config)
+            data_ingestion_artifact = data_ingestion.initiate_data_ingestion()
+            logging.info(f"data ingestion complete and artifact {data_ingestion_artifact}")
+            return data_ingestion_artifact
         except Exception as e:
             raise SensorException(e, sys)
     
