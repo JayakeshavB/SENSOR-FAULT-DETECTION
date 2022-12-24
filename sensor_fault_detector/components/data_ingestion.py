@@ -6,6 +6,7 @@ from sensor_fault_detector.data_access.sensor_data import SensorData
 from sensor_fault_detector.constant.database import DATABASE_NAME, COLLECTION_NAME
 import os, sys
 from pandas import DataFrame
+from sklearn.model_selection import train_test_split
 class DataIngestion:
     def __init__(self, data_ingestion_pipeline_config:DataIngestPipelineConfig):
         try:
@@ -37,7 +38,21 @@ class DataIngestion:
         """
         This method is used to split the data into train and test file.
         """    
-        pass
+        try:
+            logging.info("split_data_into_train_test_file")
+            train_set, test_set = train_test_split(data_frame, test_size=self.data_ingestion_pipeline_config.train_test_split_ratio)
+            logging.info('train test split completed')
+
+            dir_path = os.path.dirname(self.data_ingestion_pipeline_config.training_file_path)
+            os.makedirs(dir_path, exist_ok=True)
+
+            logging.info('exporting train test file paths')
+            train_set.to_csv(self.data_ingestion_pipeline_config.training_file_path, index=False, header=True)
+            test_set.to_csv(self.data_ingestion_pipeline_config.testing_file_path, index=False, header=True)
+            logging.info('exporting completed')
+
+        except Exception as e:
+            SensorException(e, sys)
 
     def initiate_data_ingestion(self)-> DataIngestionArtifact:
         try:

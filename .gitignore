@@ -130,3 +130,7 @@ dmypy.json
 
 # avoid log files to
 *.log
+
+# avoid artifact folder and vscode file
+artifact
+.vscode
