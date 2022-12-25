@@ -1,8 +1,9 @@
-from sensor_fault_detector.entity.config_entity import TrainingPipelineConfig, DataIngestPipelineConfig
-from sensor_fault_detector.entity.artifact_entity import DataIngestionArtifact
+from sensor_fault_detector.entity.config_entity import TrainingPipelineConfig, DataIngestPipelineConfig, DatavalidationConfig
+from sensor_fault_detector.entity.artifact_entity import DataIngestionArtifact, DataValidationArtifact
 from sensor_fault_detector.exception import SensorException
 from sensor_fault_detector.logger import logging
 from sensor_fault_detector.components.data_ingestion import DataIngestion
+from sensor_fault_detector.components.data_validation import DataValidation
 import os, sys
 
 class TrainingPipeline:
@@ -21,9 +22,14 @@ class TrainingPipeline:
         except Exception as e:
             raise SensorException(e, sys)
     
-    def start_data_validation(self):
+    def start_data_validation(self, data_ingestion_artifact:DataIngestionArtifact)->DataValidationArtifact:
         try:
-            pass
+            logging.info("Starting data validation")
+            self.data_validation_config = DatavalidationConfig(training_pipeline_config=self.training_pipeline_config)
+            self.data_validation = DataValidation(data_ingestion_artifact=data_ingestion_artifact, data_validation_config=self.data_validation_config)
+            data_validation_artifact = self.data_validation.initiate_data_validation()
+            logging.info(f"data validation complete and artifact {data_validation_artifact}")
+            return data_validation_artifact
         except Exception as e:
             raise SensorException(e, sys)
     
@@ -48,6 +54,7 @@ class TrainingPipeline:
     def run_pipeline(self):
         try:
              data_ingestion_artifact:DataIngestionArtifact = self.start_data_ingestion()
+             data_validation_artifact:DataValidationArtifact = self.start_data_validation(data_ingestion_artifact=data_ingestion_artifact)
         except Exception as e:
             raise SensorException(e, sys)
         
