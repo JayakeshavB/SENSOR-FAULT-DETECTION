@@ -67,3 +67,4 @@ class DataIngestion:
             return data_ingestion_artifact
         except Exception as e:
             raise SensorException(e, sys)
+
