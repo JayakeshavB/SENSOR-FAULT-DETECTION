@@ -1,2 +1,2 @@
-TRAINING_BUCKET_NAME = ""
-PREDICTION_BUCKET_NAME = ""
+TRAINING_BUCKET_NAME = "trainingpipline-sensorfaultdetetor"
+PREDICTION_BUCKET_NAME = "model-sensorfaultdetecor"
