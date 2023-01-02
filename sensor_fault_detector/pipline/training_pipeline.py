@@ -10,6 +10,7 @@ from sensor_fault_detector.components.model_pusher import ModelPusher
 from sensor_fault_detector.components.model_trainer import ModelTrainer
 from sensor_fault_detector.constant.s3_bucket import TRAINING_BUCKET_NAME
 from sensor_fault_detector.constant.training_pipeline import SAVED_MODEL_DIR
+from sensor_fault_detector.cloud_storage.s3_syncer import S3Sync
 import os, sys
 import shutil
 
@@ -19,6 +20,7 @@ class TrainingPipeline:
     def __init__(self):
         training_pipeline_config = TrainingPipelineConfig()
         self.training_pipeline_config = training_pipeline_config
+        self.s3_sync = S3Sync()
 
     def start_data_ingestion(self)->DataIngestionArtifact:
         try:
