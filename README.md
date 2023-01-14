@@ -1,6 +1,6 @@
 # SENSOR-FAULT-DETECTION
 
-The Air pressure system (APS) is a crtical component of a heavy-duty vehicle that uses compressed air to force a piston to provide pressure to the brake pads, slowing the vehicle down. The benifits of using an APS instead of a hydraulic system are the easy availability and long term sustainability of natural air.
+We have developed an end-to-end machine learning project for sensor fault detection in the Air Pressure System (APS) of heavy-duty vehicles. The project uses sensor data to monitor pressure, temperature, and position of the piston, to detect any discrepancies indicating sensor faults. This is important for ensuring the safe and efficient operation of the vehicle, and preventing reduced braking performance and increased wear on brake pads. 
 
 ## Tech Stack Used
 1. Python 
