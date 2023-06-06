@@ -11,7 +11,7 @@ We have developed an end-to-end machine learning project for sensor fault detect
 
 ## Infrastructure Required.
 
-1. AWS S3
-2. AWS EC2
-3. AWS ECR
+1. Azure Bob Storage
+2. Azure Virtual Machine
+3. Azure Continer Registry
 4. Git Actions
